@@ -1,0 +1,10 @@
+.DS_Store
+
+frontend/build/
+frontend/elm-stuff
+frontend/repl-temp-*
+frontend/node_modules
+
+backend/target
+
+db/data

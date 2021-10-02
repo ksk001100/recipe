@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: recipe
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - 3306:3306
+  frontend:
+    build:
+      context: ./frontend
+      target: 'develop-stage'
+    ports:
+      - '3000:3000'
+    volumes:
+      - './frontend:/app'
+    command: /bin/sh -c "elm-app start"
+  backend:
+    build:
+      context: ./backend
+      target: 'develop-stage'
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+      - cargo-cache:/usr/local/cargo/registry
+      - target-cache:/app/target
+    command: /bin/sh -c "cargo watch -x run"
+  nginx:
+    image: nginx:1.19-alpine
+    ports:
+      - '80:80'
+    depends_on:
+      - frontend
+      - backend
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+volumes:
+  db_data:
+  cargo-cache:
+  target-cache:
+
