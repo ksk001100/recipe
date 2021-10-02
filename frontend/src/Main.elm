@@ -93,7 +93,7 @@ getUser =
 userDecoder : Decoder User
 userDecoder =
     Json.Decode.map User
-        (Json.Decode.field "name" Json.Decode.string)
+        (field "name" string)
 
 
 

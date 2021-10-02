@@ -1,5 +1,5 @@
 use axum::{handler::get, response::Json, Router};
-use serde::{Serialize, Deserialize};
+use serde::Serialize;
 use std::net::SocketAddr;
 
 #[tokio::main]
