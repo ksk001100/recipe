@@ -54,22 +54,23 @@ update msg model =
 ---- VIEW ----
 
 
+myName : Maybe String -> String
+myName n =
+    "My name is "
+        ++ (case n of
+                Just name ->
+                    name
+
+                Nothing ->
+                    "..."
+           )
+
+
 view : Model -> Html Msg
 view model =
     div []
         [ img [ src "/logo.svg" ] []
-        , h1 []
-            [ text
-                ("My name is "
-                    ++ (case model.name of
-                            Just name ->
-                                name
-
-                            Nothing ->
-                                "..."
-                       )
-                )
-            ]
+        , h1 [] [ text (myName model.name) ]
         ]
 
 

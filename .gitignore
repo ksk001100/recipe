@@ -6,5 +6,6 @@ frontend/repl-temp-*
 frontend/node_modules
 
 backend/target
+backend/.env
 
 db/data

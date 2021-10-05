@@ -3,7 +3,7 @@ FROM rust:1.55 as develop-stage
 WORKDIR /app
 RUN apt-get update && apt-get install libmariadb-dev
 RUN cargo install cargo-watch
-# RUN cargo install diesel_cli --no-default-features --features mysql
+RUN cargo install sqlx-cli --no-default-features --features mysql
 COPY . .
 
 # ビルド環境
