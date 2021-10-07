@@ -1,12 +1,13 @@
 mod error;
-mod models;
 mod handlers;
+mod models;
 
+use anyhow::Result;
 use axum::{
     async_trait,
     body::{Bytes, Full},
     extract::{Extension, FromRequest, RequestParts},
-    handler::{get, post, delete},
+    handler::{delete, get, post},
     http::{self, Response, StatusCode},
     response::IntoResponse,
     Json, Router,
@@ -16,12 +17,11 @@ use headers::{authorization::Bearer, Authorization};
 use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, Validation};
 use once_cell::sync::Lazy;
 use pwhash::bcrypt::{self, BcryptSetup, BcryptVariant};
+use sea_orm::*;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use std::{collections::HashMap, convert::Infallible, fmt::Display, net::SocketAddr, sync::Arc};
 use tower_http::add_extension::AddExtensionLayer;
-use anyhow::Result;
-use sea_orm::*;
 
 pub use models::user::Entity as User;
 
@@ -34,7 +34,10 @@ async fn main() -> Result<()> {
     let api = Router::new()
         .route("/", get(handler))
         .route("/users", get(handlers::get_users).post(handlers::add_user))
-        .route("/users/:id", get(handlers::get_user_by_id).delete(handlers::delete_user))
+        .route(
+            "/users/:id",
+            get(handlers::get_user_by_id).delete(handlers::delete_user),
+        )
         .layer(AddExtensionLayer::new(db))
         .boxed();
 

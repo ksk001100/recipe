@@ -1,6 +1,5 @@
 use sea_orm::entity::prelude::*;
-use serde::{Serialize, Deserialize};
-
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, PartialEq, DeriveEntityModel, Clone, Deserialize, Serialize)]
 #[sea_orm(table_name = "users")]
