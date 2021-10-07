@@ -44,18 +44,3 @@ impl IntoResponse for Error {
         (status, body).into_response()
     }
 }
-
-impl std::convert::From<sqlx::Error> for Error {
-    fn from(err: sqlx::Error) -> Self {
-        match err {
-            sqlx::Error::RowNotFound => Error::NotFound("row not found".into()),
-            _ => Error::Internal(err.to_string()),
-        }
-    }
-}
-
-impl std::convert::From<sqlx::migrate::MigrateError> for Error {
-    fn from(err: sqlx::migrate::MigrateError) -> Self {
-        Error::DatabaseMigration(err.to_string())
-    }
-}
