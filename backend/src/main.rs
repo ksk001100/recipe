@@ -50,9 +50,7 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-async fn handler(db: Extension<Arc<DatabaseConnection>>) -> impl IntoResponse {
-    let db = db.0;
+async fn handler(Extension(db): Extension<Arc<DatabaseConnection>>) -> impl IntoResponse {
     let users = User::find().all(&db).await.unwrap();
-
     Json(users)
 }
