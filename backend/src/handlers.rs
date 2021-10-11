@@ -9,8 +9,10 @@ use serde::Deserialize;
 use std::sync::Arc;
 
 use crate::models::user;
+use crate::auth::Claims;
 
-pub async fn get_users(Extension(db): Extension<Arc<DatabaseConnection>>) -> impl IntoResponse {
+pub async fn get_users(claims: Claims, Extension(db): Extension<Arc<DatabaseConnection>>) -> impl IntoResponse {
+    println!("{:?}", claims);
     let users = user::Entity::find().all(&db).await.unwrap();
 
     Json(users)

@@ -6,21 +6,23 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-axum = "0.2"
+axum = { version = "0.2", features = ["headers"] }
 tokio = { version = "1.0", features = ["full"] } 
 tracing = "0.1"
 tracing-subscriber = "0.2"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 headers = "0.3"
-jsonwebtoken = "7"
+#jsonwebtoken = "7"
 once_cell = "1.8"
 #sqlx = { version = "0.5", features = ["runtime-tokio-rustls", "mysql", "chrono", "time"] }
 chrono = { version = "0.4", features = ["serde"] }
 dotenv = "0.15"
 anyhow = "1.0"
-tower = { version = "0.4", features = ["util", "timeout"] }
-tower-http = { version = "0.1", features = ["add-extension", "trace"] }
+tower = { version = "0.4", features = ["util", "timeout", "filter"] }
+tower-http = { version = "0.1", features = ["add-extension", "trace", "auth"] }
 thiserror = "1"
 pwhash = "1"
 sea-orm = { version = "0.2", features = ["sqlx-mysql", "runtime-tokio-rustls", "debug-print", "chrono", "macros"] }
+alcoholic_jwt = "1.0"
+reqwest = { version = "0.11", features = ["blocking", "json"] }
