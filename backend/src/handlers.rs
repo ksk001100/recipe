@@ -8,10 +8,13 @@ use sea_orm::*;
 use serde::Deserialize;
 use std::sync::Arc;
 
-use crate::models::user;
 use crate::auth::Claims;
+use crate::models::user;
 
-pub async fn get_users(claims: Claims, Extension(db): Extension<Arc<DatabaseConnection>>) -> impl IntoResponse {
+pub async fn get_users(
+    claims: Claims,
+    Extension(db): Extension<Arc<DatabaseConnection>>,
+) -> impl IntoResponse {
     println!("{:?}", claims);
     let users = user::Entity::find().all(&db).await.unwrap();
 

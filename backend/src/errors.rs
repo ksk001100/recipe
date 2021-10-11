@@ -14,7 +14,7 @@ pub enum ServiceError {
     #[error("BadRequest: {0}")]
     BadRequest(String),
     #[error("JWKSFetchError: {0}")]
-    JWKSFetchError(String)
+    JWKSFetchError(String),
 }
 
 impl IntoResponse for ServiceError {
@@ -23,7 +23,9 @@ impl IntoResponse for ServiceError {
 
     fn into_response(self) -> Response<Self::Body> {
         let (status, error_message) = match self {
-            ServiceError::InternalServerError(msg) | ServiceError::JWKSFetchError(msg) => (StatusCode::INTERNAL_SERVER_ERROR, msg),
+            ServiceError::InternalServerError(msg) | ServiceError::JWKSFetchError(msg) => {
+                (StatusCode::INTERNAL_SERVER_ERROR, msg)
+            }
             ServiceError::BadRequest(msg) => (StatusCode::BAD_REQUEST, msg),
         };
 
