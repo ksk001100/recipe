@@ -4,7 +4,7 @@ mod handlers;
 mod models;
 
 use axum::{
-    extract::Extension, handler::get, response::IntoResponse, AddExtensionLayer, Json, Router,
+    extract::Extension, routing::get, response::IntoResponse, AddExtensionLayer, Json, Router,
 };
 use sea_orm::*;
 use std::{net::SocketAddr, sync::Arc};
@@ -25,8 +25,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             "/users/:id",
             get(handlers::get_user_by_id).delete(handlers::delete_user),
         )
-        .layer(AddExtensionLayer::new(db))
-        .boxed();
+        .layer(AddExtensionLayer::new(db));
 
     let app = Router::new().nest("/api", api);
 

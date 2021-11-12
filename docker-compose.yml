@@ -20,7 +20,7 @@ services:
       - '3000:3000'
     volumes:
       - './frontend:/app'
-    command: /bin/sh -c "elm-app start"
+    command: /bin/sh -c "npm run start"
   backend:
     build:
       context: ./backend
