@@ -4,7 +4,7 @@ mod handlers;
 mod models;
 
 use axum::{
-    extract::Extension, routing::get, response::IntoResponse, AddExtensionLayer, Json, Router,
+    extract::Extension, response::IntoResponse, routing::get, AddExtensionLayer, Json, Router,
 };
 use sea_orm::*;
 use std::{net::SocketAddr, sync::Arc};
